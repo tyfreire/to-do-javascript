@@ -1,9 +1,7 @@
-
 const readline = require('readline').createInterface({
   input: process.stdin,
   output: process.stdout,
 });
-
 
 function askquestion(text){
   return new Promise(function(resolve, rej){
@@ -16,10 +14,11 @@ function askquestion(text){
 
 async function yesOrNo(text){
   var answer = await askquestion(text);
+
   if(answer == "yes") {
     return true;
   } else if(answer == "no"){
-    return false
+    return false;
   } else {
     console.log("Answer not valid");
     return await yesOrNo(text);
@@ -27,33 +26,25 @@ async function yesOrNo(text){
 }
 
 async function main() {
-  let todo = []
+  let todo = [];
 
-  var answer = await yesOrNo("Create todo?")
-  console.log("Answer:", answer)
+  var answer = await yesOrNo("Create todo?");
   
-  var item = await askquestion("What is the task?")
+  var item = await askquestion("What is the task?");
   todo.push(item);
-  console.log("Task:", item);
-
+  
   while (answer = await yesOrNo("Add another task?")) {
-    console.log("Answer:", answer)
-
-    var item = await askquestion("What is the task?")
+    var item = await askquestion("What is the task?");
     todo.push(item);
-    console.log("Task:", item);
   }
 
   console.log('This is your to-do list:');
 
   todo.forEach((item)=> {
-    console.log(item)
-  })
+    console.log(item);
+  });
   
   process.exit();
 }
 
-main()
-
-
-
+main();
