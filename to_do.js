@@ -28,8 +28,13 @@ async function yesOrNo(text){
 async function main() {
   let todo = [];
 
-  var answer = await yesOrNo("Create todo?");
-  
+  var answer = await yesOrNo("Create to-do?");
+
+  if(!answer) {
+    console.log("Ok, bye.")
+    process.exit();
+  }
+
   var item = await askquestion("What is the task?");
   todo.push(item);
   
