@@ -1,3 +1,6 @@
+// Fix warning message
+require('events').EventEmitter.defaultMaxListeners = 0
+
 const Task = require("../src/task");
 
 const readline = require('readline').createInterface({
@@ -27,6 +30,18 @@ async function yesOrNo(text){
   }
 }
 
+async function askId(text, size){
+  var answer = await askquestion(text);
+  let taskId = parseInt(answer);
+
+  if(taskId >= 0 && taskId < size) {
+    return taskId;
+  } else {
+    console.log("Answer not valid");
+    return await askId(text, size);
+  }  
+}
+
 async function main() {
   let todo = [];
 
@@ -49,9 +64,29 @@ async function main() {
 
   console.log('This is your to-do list:');
 
+  var count = 0
   todo.forEach((item)=> {
-    console.log(item.action, item.completed);
+    console.log(count, item.action, item.completed);
+    count++
   });
+
+  var answer = await yesOrNo("Mark task as done?");
+  
+  if(answer) {
+    var taskId = await askId("Which task number?", todo.length)
+    Task.markAsDone(todo[taskId]);
+  } else {
+    console.log("Ok, bye.")
+    process.exit();
+  }
+  console.log('This is your to-do list:');
+
+  var count = 0
+  todo.forEach((item)=> {
+    console.log(count, item.action, item.completed);
+    count++
+  });
+
   process.exit();
 }
 
