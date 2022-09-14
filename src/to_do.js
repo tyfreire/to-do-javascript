@@ -38,20 +38,20 @@ async function main() {
   }
 
   var item = await askquestion("What is the task?");
-  todo.push(item);
+  let new_task = Task.buildTask(item)
+  todo.push(new_task);
   
   while (answer = await yesOrNo("Add another task?")) {
     var item = await askquestion("What is the task?");
-    Task.buildTask(item)
-    todo.push(item);
+    let new_task = Task.buildTask(item)
+    todo.push(new_task);
   }
 
   console.log('This is your to-do list:');
 
   todo.forEach((item)=> {
-    console.log(item);
+    console.log(item.action, item.completed);
   });
-  
   process.exit();
 }
 
