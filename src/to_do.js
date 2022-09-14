@@ -1,3 +1,5 @@
+const Task = require("../src/task");
+
 const readline = require('readline').createInterface({
   input: process.stdin,
   output: process.stdout,
@@ -40,6 +42,7 @@ async function main() {
   
   while (answer = await yesOrNo("Add another task?")) {
     var item = await askquestion("What is the task?");
+    Task.buildTask(item)
     todo.push(item);
   }
 
@@ -53,7 +56,3 @@ async function main() {
 }
 
 main();
-
-// module.exports =
-
-// implement mark as done for already done tasks
