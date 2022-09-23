@@ -75,6 +75,13 @@ async function main() {
   if(answer) {
     var taskId = await askId("Which task number?", todo.length)
     Task.markAsDone(todo[taskId]);
+
+    while (answer = await yesOrNo("Mark another task?")) {
+      var item = await askquestion("Which task number?");
+      var taskId = await askId("Which task number?", todo.length)
+      Task.markAsDone(todo[taskId]);
+    }
+
   } else {
     console.log("Ok, bye.")
     process.exit();
