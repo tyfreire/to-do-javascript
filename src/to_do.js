@@ -41,7 +41,19 @@ async function askId(text, size){
     return await askId(text, size);
   }  
 }
+function printToDo(todo) {
+  console.log("This is your to-do list:");
 
+  var count = 0
+  todo.forEach((item)=> {
+    if (item.completed == true){
+      console.log(count, item.action, "done");
+    } else {
+      console.log(count, item.action);
+    } 
+    count++
+  });
+}
 async function main() {
   let todo = [];
 
@@ -62,13 +74,7 @@ async function main() {
     todo.push(new_task);
   }
 
-  console.log('This is your to-do list:');
-
-  var count = 0
-  todo.forEach((item)=> {
-    console.log(count, item.action, item.completed);
-    count++
-  });
+  printToDo(todo)
 
   var answer = await yesOrNo("Mark task as done?");
   
@@ -85,17 +91,8 @@ async function main() {
     console.log("Ok, bye.")
     process.exit();
   }
-  console.log('This is your to-do list:');
 
-  var count = 0
-  todo.forEach((item)=> {
-    if (item.completed == true){
-      console.log(count, item.action, "done");
-    } else {
-      console.log(count, item.action);
-    } 
-    count++
-  });
+  printToDo(todo)
 
   process.exit();
 }
