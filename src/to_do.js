@@ -54,42 +54,38 @@ function printToDo(todo) {
     count++
   });
 }
+
+function stop(){
+  console.log("Ok, bye.")
+  process.exit();
+}
+
 async function main() {
   let todo = [];
 
   var answer = await yesOrNo("Create to-do?");
 
   if(!answer) {
-    console.log("Ok, bye.")
-    process.exit();
+    stop();
   }
 
-  var item = await askquestion("What is the task?");
-  let new_task = Task.buildTask(item)
-  todo.push(new_task);
-  
-  while (answer = await yesOrNo("Add another task?")) {
+  do {
     var item = await askquestion("What is the task?");
     let new_task = Task.buildTask(item)
     todo.push(new_task);
-  }
+  } while (answer = await yesOrNo("Add another task?"))
 
   printToDo(todo)
 
   var answer = await yesOrNo("Mark task as done?");
   
   if(answer) {
-    var taskId = await askId("Which task number?", todo.length)
-    Task.markAsDone(todo[taskId]);
-
-    while (answer = await yesOrNo("Mark another task?")) {
+    do {
       var taskId = await askId("Which task number?", todo.length)
       Task.markAsDone(todo[taskId]);
-    }
-
+    } while (answer = await yesOrNo("Mark another task?"))
   } else {
-    console.log("Ok, bye.")
-    process.exit();
+    stop()
   }
 
   printToDo(todo)
