@@ -77,7 +77,6 @@ async function main() {
     Task.markAsDone(todo[taskId]);
 
     while (answer = await yesOrNo("Mark another task?")) {
-      var item = await askquestion("Which task number?");
       var taskId = await askId("Which task number?", todo.length)
       Task.markAsDone(todo[taskId]);
     }
@@ -90,7 +89,11 @@ async function main() {
 
   var count = 0
   todo.forEach((item)=> {
-    console.log(count, item.action, item.completed);
+    if (item.completed == true){
+      console.log(count, item.action, "done");
+    } else {
+      console.log(count, item.action);
+    } 
     count++
   });
 
