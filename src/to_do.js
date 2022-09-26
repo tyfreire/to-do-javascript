@@ -17,7 +17,7 @@ function askquestion(text){
   });
 }
 
-async function yesOrNo(text){
+async function yesorno(text){
   var entry = text + "(yes/no)";
   var answer = await askquestion(entry);
 
@@ -27,23 +27,23 @@ async function yesOrNo(text){
     return false;
   } else {
     console.log("Answer not valid");
-    return await yesOrNo(text);
+    return await yesorno(text);
   }
 }
 
-async function askId(text, size){
+async function askid(text, size){
   var answer = await askquestion(text);
-  let taskId = parseInt(answer);
+  let taskid = parseInt(answer);
 
-  if(taskId >= 0 && taskId < size) {
-    return taskId;
+  if(taskid >= 0 && taskid < size) {
+    return taskid;
   } else {
     console.log("Answer not valid");
-    return await askId(text, size);
+    return await askid(text, size);
   }  
 }
 
-function printToDo(todo) {
+function printtodo(todo) {
   console.log("This is your to-do list:");
 
   var count = 0;
@@ -65,7 +65,7 @@ function stop(){
 async function main() {
   let todo = [];
 
-  var answer = await yesOrNo("Create to-do?");
+  var answer = await yesorno("Create to-do?");
 
   if(!answer) {
     stop();
@@ -73,24 +73,24 @@ async function main() {
 
   do {
     var item = await askquestion("What is the task?");
-    let new_task = Task.buildTask(item);
+    let new_task = Task.buildtask(item);
     todo.push(new_task);
-  } while (answer = await yesOrNo("Add another task?"));
+  } while (answer = await yesorno("Add another task?"));
 
-  printToDo(todo);
+  printtodo(todo);
 
-  var answer = await yesOrNo("Mark task as done?");
+  var answer = await yesorno("Mark task as done?");
   
   if(answer) {
     do {
-      var taskId = await askId("Which task number?", todo.length)
-      Task.markAsDone(todo[taskId]);
-    } while (answer = await yesOrNo("Mark another task?"));
+      var taskid = await askid("Which task number?", todo.length)
+      Task.markasdone(todo[taskid]);
+    } while (answer = await yesorno("Mark another task?"));
   } else {
     stop();
   }
 
-  printToDo(todo);
+  printtodo(todo);
 
   process.exit();
 }

@@ -1,15 +1,15 @@
-function buildTask(item){
+function buildtask(item){
   return {
     action: item,
     completed: false,
   };
 }
 
-function markAsDone(task){
+function markasdone(task){
   return task.completed = true
 }
 
 module.exports = {
-  buildTask: buildTask,
-  markAsDone: markAsDone
+  buildtask: buildtask,
+  markasdone: markasdone
 };
