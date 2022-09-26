@@ -9,7 +9,7 @@ const readline = require('readline').createInterface({
 });
 
 function askquestion(text){
-  return new Promise(function(resolve, rej){
+  return new Promise(function(resolve, reject){
     console.log(text);
     readline.on('line', (task) => {
       resolve(task);
@@ -42,6 +42,7 @@ async function askId(text, size){
     return await askId(text, size);
   }  
 }
+
 function printToDo(todo) {
   console.log("This is your to-do list:");
 
