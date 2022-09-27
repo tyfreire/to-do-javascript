@@ -10,7 +10,7 @@ test("creates task", () => {
 test("marks as done", () => {
   let task = Task.buildTask("do the laundry");
 
-  Task.markAsDone(task)
+  Task.markAsDone(task);
 
   expect(task.completed).toBe(true);
 });
