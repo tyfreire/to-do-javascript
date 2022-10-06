@@ -12,9 +12,9 @@ function askQuestion(text, read = readline) {
   });
 }
 
-async function yesOrNo(text, ask_fn = askQuestion) {
+async function yesOrNo(text, askFn = askQuestion) {
   var entry = text + "(yes/no)";
-  var answer = await ask_fn(entry);
+  var answer = await askFn(entry);
 
   if (answer == "yes") {
     return true;
@@ -22,7 +22,7 @@ async function yesOrNo(text, ask_fn = askQuestion) {
     return false;
   } else {
     console.log("Answer not valid!");
-    return await yesOrNo(text, ask_fn);
+    return await yesOrNo(text, askFn);
   }
 }
 

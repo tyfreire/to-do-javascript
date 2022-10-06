@@ -1,13 +1,13 @@
 class Task {
   constructor(activity) {
-    this.id = this.#generate_id();
+    this.id = this.#generateId();
     this.activity = activity;
     this.completed = false;
   }
   markAsDone() {
     this.completed = true;
   }
-  #generate_id() {
+  #generateId() {
     return Math.floor(Math.random() * 1000);
   }
 }
