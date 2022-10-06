@@ -8,11 +8,11 @@ test("add task to to-do list", () => {
   expect(toDo.addTask(task)).toBe(true);
 });
 
-test("show to-do list content", () => {
-  let toDo = new ToDo();
-  let task = new Task("study");
+// test("show to-do list content", () => {
+//   let toDo = new ToDo();
+//   let task = new Task("study");
 
-  toDo.addTask(task);
+//   toDo.addTask(task);
 
-  expect(toDo.showList()).toEqual([task]);
-});
+//   expect(toDo.showList()).toEqual([task]);
+// });

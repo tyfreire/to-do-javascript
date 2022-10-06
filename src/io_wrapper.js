@@ -26,7 +26,13 @@ async function yesOrNo(text, askFn = askQuestion) {
   }
 }
 
+function stop() {
+  console.log("Ok, bye.");
+  process.exit();
+}
+
 module.exports = {
   askQuestion: askQuestion,
   yesOrNo: yesOrNo,
+  stop: stop,
 };
