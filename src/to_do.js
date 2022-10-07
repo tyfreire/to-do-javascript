@@ -3,52 +3,52 @@ const readline = require("readline").createInterface({
   output: process.stdout,
 });
 
+const fs = require('fs');
+const path = require('path');
+
 function askQuestion(text) {
   return new Promise(function (resolve, reject) {
     console.log(text);
-    readline.on("line", (task) => {
+    const listener = (task) => {
+      readline.off("line", listener);
       resolve(task);
-    });
+    }
+    readline.on("line", listener);
   });
 }
 
 async function yesOrNo(text) {
-  var entry = text + "(yes/no)";
-  var answer = await askQuestion(entry);
+  const entry = text + "(yes/no)";
+  const answer = await askQuestion(entry);
 
-  if (answer == "yes") {
-    return true;
-  } else if (answer == "no") {
-    return false;
-  } else {
+  if (!['yes', 'no'].includes(answer)) {
     console.log("Answer not valid!");
-    return await yesOrNo(text);
+    return yesOrNo(text);
   }
+
+  return answer === "yes";
 }
 
 async function askId(text, size) {
   var answer = await askQuestion(text);
   let taskId = parseInt(answer);
 
-  if (taskId >= 0 && taskId < size) {
-    return taskId;
+  if (taskId >= 1 && taskId <= size) {
+    return taskId - 1;
   } else {
     console.log("Answer not valid!");
-    return await askId(text, size);
+    return askId(text, size);
   }
 }
 
 function printToDo(todo) {
   console.log("This is your to-do list:");
-
-  var count = 0;
-  todo.forEach((item) => {
+  todo.forEach((item, index) => {
     if (item.completed == true) {
-      console.log(count, item.action, "done");
+      console.log(index + 1, "\t", item.action, "\t", "done");
     } else {
-      console.log(count, item.action);
+      console.log(index + 1, "\t", item.action);
     }
-    count++;
   });
 }
 
@@ -57,10 +57,27 @@ function stop() {
   process.exit();
 }
 
+const FILE_NAME = path.resolve(__dirname, '../todo.json');
+
+function save(todoList) {
+  const content = JSON.stringify(todoList);
+  fs.writeFileSync(FILE_NAME, content);
+}
+
+function load() {
+  if (!fs.existsSync(FILE_NAME)) {
+    return [];
+  }
+  const content = fs.readFileSync(FILE_NAME).toString();
+  return JSON.parse(content);
+}
+
 module.exports = {
-  askQuestion: askQuestion,
-  yesOrNo: yesOrNo,
-  askId: askId,
-  printToDo: printToDo,
-  stop: stop,
+  askQuestion,
+  yesOrNo,
+  askId,
+  printToDo,
+  stop,
+  load,
+  save
 };
